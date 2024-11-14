@@ -1,12 +1,14 @@
 import type { ProductDto } from '../../dtos'
 import { Entity } from '../abstracts/entity'
 import { Integer, Text } from '../structs'
+import { Supplier } from './supplier'
 
 type ProductProps = {
   name: Text
   description: Text
   code: Text
   price: Integer
+  supplier: Supplier
 }
 
 export class Product extends Entity<ProductProps> {
@@ -16,6 +18,7 @@ export class Product extends Entity<ProductProps> {
       price: Integer.create(dto.price, 'price'),
       code: Text.create(dto.code, 'code'),
       description: Text.create(dto.description, 'description'),
+      supplier: Supplier.create(dto.supplier),
     })
   }
 
@@ -39,13 +42,18 @@ export class Product extends Entity<ProductProps> {
     return this.props.code
   }
 
-  get dto() {
+  get supplier() {
+    return this.props.supplier
+  }
+
+  get dto(): ProductDto {
     return {
       id: this.id,
       name: this.name.value,
       description: this.description.value,
       code: this.code.value,
       price: this.price.value,
+      supplier: this.supplier.dto,
     }
   }
 }
