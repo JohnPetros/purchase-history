@@ -1,15 +1,15 @@
-import { Product } from "../../domain/entities";
-import { ProductDto } from "../../dtos";
-import { IProductsRepository } from "../../interfaces/repositories";
+import { Product } from '../../domain/entities'
+import type { ProductDto } from '../../dtos'
+import type { IProductsRepository } from '../../interfaces/repositories'
 
 export class RegisterProductUseCase {
-  constructor(private readonly productsRepository: IProductsRepository) { }
+  constructor(private readonly productsRepository: IProductsRepository) {}
 
   async execute(dto: ProductDto) {
     const existingProductWithCode = await this.productsRepository.findByCode(dto.code)
 
     if (existingProductWithCode) {
-      throw new Error("Product with the same code already exists")
+      throw new Error('Product with the same code already exists')
     }
 
     const product = Product.create(dto)
