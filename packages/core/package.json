@@ -1,0 +1,15 @@
+{
+  "name": "@purchase-history/core",
+  "exports": {
+    "./entities": "./src/domain/entities/index.ts",
+    "./structs": "./src/domain/structs/index.ts",
+    "./interfaces": "./src/interfaces/index.ts",
+    "./dtos": "./src/dtos/index.ts",
+    "./types": "./src/types/index.ts",
+    "./constants": "./src/constants/index.ts",
+    "./responses": "./src/responses/index.ts",
+    "./use-cases": "./src/use-cases/index.ts",
+    "./libs": "./src/libs/index.ts",
+    "./errors": "./src/errors/index.ts"
+  }
+}
