@@ -1,12 +1,10 @@
-import { Invoice } from '../../domain/entities/invoice'
-import type { InvoiceDto } from '../../dtos'
-import type { IInvoincesRepository } from '../../interfaces/repositories'
+import type { IInvoicesRepository } from '../../interfaces/repositories'
 
 export class ListInvoicesUseCase {
-  private constructor(private readonly invoicesRepository: IInvoincesRepository) {}
+  constructor(private readonly invoicesRepository: IInvoicesRepository) {}
 
-  async execute(dto: InvoiceDto) {
-    const invoice = Invoice.create(dto)
-    await this.invoicesRepository.add(invoice)
+  async execute() {
+    const invoices = await this.invoicesRepository.findMany()
+    return invoices.map((invoice) => invoice.dto)
   }
 }

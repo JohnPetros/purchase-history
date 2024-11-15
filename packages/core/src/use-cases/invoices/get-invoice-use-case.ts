@@ -1,10 +1,11 @@
-import type { IInvoincesRepository } from '../../interfaces/repositories'
+import type { IInvoicesRepository } from '../../interfaces/repositories'
 
-export class ListInvoicesUseCase {
-  private constructor(private readonly invoicesRepository: IInvoincesRepository) {}
+export class GetInvoicesUseCase {
+  constructor(private readonly invoicesRepository: IInvoicesRepository) {}
 
   async execute(invoiceId: string) {
-    const invoice = await this.invoicesRepository.findId(invoiceId)
+    const invoice = await this.invoicesRepository.findById(invoiceId)
+    if (!invoice) throw new Error('Invoice not found')
     return invoice.dto
   }
 }
