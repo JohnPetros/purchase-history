@@ -27,4 +27,8 @@ export const ProductModel = sequelize.define<SequelizeProduct>('products', {
   },
 })
 
-ProductModel.belongsTo(SupplierModel, { constraints: true, foreignKey: 'supplierId' })
+ProductModel.belongsTo(SupplierModel, {
+  constraints: true,
+  foreignKey: 'supplierId',
+  onDelete: 'CASCADE',
+})

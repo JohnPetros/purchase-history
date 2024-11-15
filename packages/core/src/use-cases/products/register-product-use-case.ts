@@ -1,18 +1,33 @@
 import { Product } from '../../domain/entities'
 import type { ProductDto } from '../../dtos'
-import type { IProductsRepository } from '../../interfaces/repositories'
+import type {
+  IProductsRepository,
+  ISuppliersRepository,
+} from '../../interfaces/repositories'
 
 export class RegisterProductUseCase {
-  constructor(private readonly productsRepository: IProductsRepository) {}
+  constructor(
+    private readonly productsRepository: IProductsRepository,
+    private readonly suppliersRepository: ISuppliersRepository,
+  ) {}
 
-  async execute(dto: ProductDto) {
-    const existingProductWithCode = await this.productsRepository.findByCode(dto.code)
+  async execute(productDto: ProductDto, supplierId: string) {
+    const existingProductWithCode = await this.productsRepository.findByCode(
+      productDto.code,
+    )
 
     if (existingProductWithCode) {
       throw new Error('Product with the same code already exists')
     }
 
-    const product = Product.create(dto)
+    const supplier = await this.suppliersRepository.findById(supplierId)
+
+    if (!supplier) {
+      throw new Error('Supplier not found')
+    }
+
+    const product = Product.create(productDto)
+    product.supplier = supplier
 
     await this.productsRepository.add(product)
   }

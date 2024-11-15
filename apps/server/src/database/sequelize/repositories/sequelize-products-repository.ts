@@ -35,7 +35,17 @@ export class SequelizeProductsRepository implements IProductsRepository {
   }
 
   async update(product: Product): Promise<void> {
-    throw new Error('Method not implemented.')
+    const productDto = product.dto
+    await this.productModel.update(
+      {
+        name: productDto.name,
+        code: productDto.code,
+        description: productDto.description,
+        price: productDto.price,
+        supplierId: productDto.supplier?.id,
+      },
+      { where: { id: product.id } },
+    )
   }
 
   async remove(productId: string): Promise<void> {
@@ -43,12 +53,14 @@ export class SequelizeProductsRepository implements IProductsRepository {
   }
 
   async add(product: Product) {
+    const productDto = product.dto
     await this.productModel.create({
       id: product.id,
-      name: product.name,
-      code: product.code,
-      description: product.description,
-      price: product.price,
+      name: productDto.name,
+      code: productDto.code,
+      description: productDto.description,
+      price: productDto.price,
+      supplierId: productDto.supplier?.id,
     })
   }
 
@@ -58,7 +70,7 @@ export class SequelizeProductsRepository implements IProductsRepository {
       name: sequelizeProduct.name,
       code: sequelizeProduct.code,
       description: sequelizeProduct.description,
-      price: sequelizeProduct.price,
+      price: Number(sequelizeProduct.price),
       supplier: sequelizeProduct.supplier,
     })
   }

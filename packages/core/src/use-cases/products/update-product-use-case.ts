@@ -20,7 +20,6 @@ export class UpdadeProductUseCase {
     }
 
     const updatedProduct = product.update(dto)
-
     await this.productsRepository.update(updatedProduct)
   }
 }

@@ -1,0 +1,5 @@
+export { ListProductsController } from './list-products-controller'
+export { RegisterProductController } from './register-product-controller'
+export { GetProductController } from './get-product-controller'
+export { UpdateProductController } from './update-product-controller'
+export { DeleteProductController } from './delete-product-controller'
