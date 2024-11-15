@@ -1,7 +1,9 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../client'
+
 import type { SequelizeProduct } from '../types'
+import { sequelize } from '../client'
 import { SupplierModel } from './supplier-model'
+import { InvoiceItemModel } from './invoice-item-model'
 
 export const ProductModel = sequelize.define<SequelizeProduct>('products', {
   id: {
