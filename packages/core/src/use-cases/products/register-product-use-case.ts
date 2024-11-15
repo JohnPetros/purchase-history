@@ -30,5 +30,6 @@ export class RegisterProductUseCase {
     product.supplier = supplier
 
     await this.productsRepository.add(product)
+    return product.dto
   }
 }

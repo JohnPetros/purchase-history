@@ -1,4 +1,5 @@
 import Express from 'express'
+import Cors from 'cors'
 
 import type { IApp } from '@purchase-history/core/interfaces'
 import { ProductsRoutes, SuppliersRoutes } from './routes'
@@ -10,6 +11,7 @@ export class ExpressApp implements IApp {
   constructor() {
     this.app = Express()
     this.app.use(Express.json())
+    this.app.use(Cors())
     this.useRoutes()
   }
 
