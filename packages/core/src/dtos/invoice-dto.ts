@@ -3,7 +3,7 @@ import type { InvoiceItemDto } from './invoice-item-dto'
 
 export type InvoiceDto = {
   id?: string
-  items: InvoiceItemDto[]
-  invoiceStatus: InvoiceStatus
-  sentAt: Date
+  status?: InvoiceStatus
+  items?: InvoiceItemDto[]
+  sentAt?: Date
 }

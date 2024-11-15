@@ -1,4 +1,4 @@
-import type { InvoiceDto } from '../../dtos'
+import type { InvoiceDto, InvoiceItemDto } from '../../dtos'
 import type { InvoiceStatus } from '../../types'
 import { Entity } from '../abstracts/entity'
 import { Datetime, Integer } from '../structs'
@@ -17,24 +17,36 @@ type InvoiceProps = {
 
 export class Invoice extends Entity<InvoiceProps> {
   static create(dto: InvoiceDto) {
-    return new Invoice(
-      {
-        items: dto.items.map(({ product, itemsCount }) => ({
+    let items: InvoiceItem[] = []
+
+    if (dto.items) {
+      items = dto.items.map(({ product, itemsCount }) => {
+        return {
           itemsCount: Integer.create(itemsCount, 'product items count'),
           product: Product.create(product),
-        })),
-        status: dto.invoiceStatus,
-        sentAt: Datetime.create(dto.sentAt, 'sending date must be a integer'),
+        }
+      })
+    }
+
+    return new Invoice(
+      {
+        items,
+        status: dto.status ?? 'pending',
+        sentAt: Datetime.create(dto.sentAt, 'sending date'),
       },
       dto.id,
     )
+  }
+
+  addItem(item: InvoiceItem) {
+    this.props.items.push(item)
   }
 
   get status() {
     return this.props.status
   }
 
-  get items() {
+  get items(): InvoiceItem[] {
     return this.props.items
   }
 
@@ -45,7 +57,7 @@ export class Invoice extends Entity<InvoiceProps> {
   get dto(): InvoiceDto {
     return {
       id: this.id,
-      invoiceStatus: this.status,
+      status: this.status,
       items: this.items.map((item) => ({
         product: item.product.dto,
         itemsCount: item.itemsCount.value,

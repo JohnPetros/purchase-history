@@ -1,6 +1,8 @@
 import { sequelize } from './sequelize/client'
-import { ProductModel, SupplierModel } from './sequelize/models'
+import { SupplierModel, ProductModel, InvoiceModel } from './sequelize/models'
+import { InvoiceItemModel } from './sequelize/models/invoice-item-model'
 import {
+  SequelizeInvoicesRepository,
   SequelizeProductsRepository,
   SequelizeSuppliersRepository,
 } from './sequelize/repositories'
@@ -10,3 +12,7 @@ import {
 
 export const productsRepository = new SequelizeProductsRepository(ProductModel)
 export const suppliersRepository = new SequelizeSuppliersRepository(SupplierModel)
+export const invoicesRepository = new SequelizeInvoicesRepository(
+  InvoiceModel,
+  InvoiceItemModel,
+)

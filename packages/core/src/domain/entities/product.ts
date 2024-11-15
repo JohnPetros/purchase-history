@@ -13,7 +13,6 @@ type ProductProps = {
 
 export class Product extends Entity<ProductProps> {
   static create(dto: ProductDto) {
-    console.log(dto)
     return new Product(
       {
         name: Text.create(dto.name, 'name'),
@@ -61,7 +60,7 @@ export class Product extends Entity<ProductProps> {
       description: this.description.value,
       code: this.code.value,
       price: this.price.value,
-      supplier: this.supplier?.dto ?? null,
+      supplier: this.supplier?.dto ?? undefined,
     }
   }
 }
