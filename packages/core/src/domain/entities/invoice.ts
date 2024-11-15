@@ -17,14 +17,17 @@ type InvoiceProps = {
 
 export class Invoice extends Entity<InvoiceProps> {
   static create(dto: InvoiceDto) {
-    return new Invoice({
-      items: dto.items.map(({ product, itemsCount }) => ({
-        itemsCount: Integer.create(itemsCount, 'product items count'),
-        product: Product.create(product),
-      })),
-      status: dto.invoiceStatus,
-      sentAt: Datetime.create(dto.sentAt, 'sending date must be a integer'),
-    })
+    return new Invoice(
+      {
+        items: dto.items.map(({ product, itemsCount }) => ({
+          itemsCount: Integer.create(itemsCount, 'product items count'),
+          product: Product.create(product),
+        })),
+        status: dto.invoiceStatus,
+        sentAt: Datetime.create(dto.sentAt, 'sending date must be a integer'),
+      },
+      dto.id,
+    )
   }
 
   get status() {

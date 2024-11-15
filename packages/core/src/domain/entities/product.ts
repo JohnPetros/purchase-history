@@ -8,18 +8,26 @@ type ProductProps = {
   description: Text
   code: Text
   price: Integer
-  supplier: Supplier
+  supplier: Supplier | null
 }
 
 export class Product extends Entity<ProductProps> {
   static create(dto: ProductDto) {
-    return new Product({
-      name: Text.create(dto.name, 'name'),
-      price: Integer.create(dto.price, 'price'),
-      code: Text.create(dto.code, 'code'),
-      description: Text.create(dto.description, 'description'),
-      supplier: Supplier.create(dto.supplier),
-    })
+    console.log(dto)
+    return new Product(
+      {
+        name: Text.create(dto.name, 'name'),
+        price: Integer.create(dto.price, 'price'),
+        code: Text.create(dto.code, 'code'),
+        description: Text.create(dto.description, 'description'),
+        supplier: dto.supplier ? Supplier.create(dto.supplier) : null,
+      },
+      dto.id,
+    )
+  }
+
+  set supplier(supplier: Supplier) {
+    this.props.supplier = supplier
   }
 
   update(dto: Partial<ProductDto>) {
@@ -42,7 +50,7 @@ export class Product extends Entity<ProductProps> {
     return this.props.code
   }
 
-  get supplier() {
+  get supplier(): Supplier | null {
     return this.props.supplier
   }
 
@@ -53,7 +61,7 @@ export class Product extends Entity<ProductProps> {
       description: this.description.value,
       code: this.code.value,
       price: this.price.value,
-      supplier: this.supplier.dto,
+      supplier: this.supplier?.dto ?? null,
     }
   }
 }

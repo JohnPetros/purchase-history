@@ -1,7 +1,7 @@
 import Express from 'express'
 
 import type { IApp } from '@purchase-history/core/interfaces'
-import { ProductsRoutes } from './routes'
+import { ProductsRoutes, SuppliersRoutes } from './routes'
 
 export class ExpressApp implements IApp {
   private readonly app: Express.Express
@@ -24,5 +24,6 @@ export class ExpressApp implements IApp {
 
   private useRoutes() {
     this.app.use(ProductsRoutes())
+    this.app.use(SuppliersRoutes())
   }
 }

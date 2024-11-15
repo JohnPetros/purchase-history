@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize'
 import { sequelize } from '../client'
-import type { SequelizeProduct } from '../types'
+import type { SequelizeSupplier } from '../types'
 
-export const SupplierModel = sequelize.define<SequelizeProduct>('suppliers', {
+export const SupplierModel = sequelize.define<SequelizeSupplier>('suppliers', {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,

@@ -6,5 +6,5 @@ export type ProductDto = {
   description: string
   code: string
   price: number
-  supplier: SupplierDto
+  supplier: SupplierDto | null
 }

@@ -11,12 +11,15 @@ type SupplierProps = {
 
 export class Supplier extends Entity<SupplierProps> {
   static create(dto: SupplierDto) {
-    return new Supplier({
-      name: Text.create(dto.name, 'name'),
-      email: Email.create(dto.email),
-      cnpj: Text.create(dto.cnpj, 'cnpj'),
-      phone: Text.create(dto.phone, 'phone'),
-    })
+    return new Supplier(
+      {
+        name: Text.create(dto.name, 'name'),
+        email: Email.create(dto.email),
+        cnpj: Text.create(dto.cnpj, 'cnpj'),
+        phone: Text.create(dto.phone, 'phone'),
+      },
+      dto.id,
+    )
   }
 
   update(dto: Partial<SupplierDto>) {

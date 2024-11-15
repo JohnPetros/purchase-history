@@ -3,7 +3,7 @@ import type { SupplierDto } from '../../dtos'
 import type { ISuppliersRepository } from '../../interfaces/repositories'
 
 export class RegisterSupplierUseCase {
-  private constructor(private readonly suppliersRepository: ISuppliersRepository) {}
+  constructor(private readonly suppliersRepository: ISuppliersRepository) {}
 
   async execute(dto: SupplierDto) {
     const existingSupplierWithSameEmail = await this.suppliersRepository.findByEmail(

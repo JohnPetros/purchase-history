@@ -1,0 +1,5 @@
+export { ListSuppliersController } from './list-suppliers-controller'
+export { RegisterSupplierController } from './register-supplier-controller'
+export { UpdateSupplierController } from './update-supplier-controller'
+export { DeleteSupplierController } from './delete-supplier-controller'
+export { GetsupplierController } from './get-supplier-controller'
