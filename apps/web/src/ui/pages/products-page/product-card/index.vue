@@ -6,7 +6,7 @@ const { id, code, name, price } = defineProps({
   id: String,
   code: String,
   name: String,
-  price: Number,
+  price: String,
 })
 </script>
 
