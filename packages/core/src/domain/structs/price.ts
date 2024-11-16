@@ -1,10 +1,10 @@
-import { Integer } from './integer'
+import { Float } from './float'
 
 export class Price {
   private constructor(readonly value: number) {}
 
   static create(value: number) {
-    const interger = Integer.create(value, 'price')
+    const interger = Float.create(value, 'price')
 
     return new Price(interger.value)
   }

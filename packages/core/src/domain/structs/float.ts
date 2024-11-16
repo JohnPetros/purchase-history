@@ -1,6 +1,6 @@
 import { NotValidError } from '../../errors'
 
-export class Integer {
+export class Float {
   private constructor(readonly value: number) {}
 
   static create(value: number, key: string) {
@@ -9,6 +9,6 @@ export class Integer {
 
     if (value < 0) throw new NotValidError(`${key} must be greater than one`)
 
-    return new Integer(value)
+    return new Float(value)
   }
 }
