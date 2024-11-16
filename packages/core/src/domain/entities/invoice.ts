@@ -1,4 +1,4 @@
-import type { InvoiceDto, InvoiceItemDto } from '../../dtos'
+import type { InvoiceDto } from '../../dtos'
 import type { InvoiceStatus } from '../../types'
 import { Entity } from '../abstracts/entity'
 import { Datetime, Integer } from '../structs'
