@@ -3,7 +3,6 @@ import type { ISuppliersRepository } from '@purchase-history/core/interfaces'
 
 import type { SupplierModel } from '../models'
 import type { SequelizeSupplier } from '../types'
-import { where } from 'sequelize'
 
 export class SequelizeSuppliersRepository implements ISuppliersRepository {
   constructor(private readonly supplierModel: typeof SupplierModel) {}
@@ -60,13 +59,12 @@ export class SequelizeSuppliersRepository implements ISuppliersRepository {
   }
 
   async add(supplier: Supplier) {
-    const supplierDto = supplier.dto
     await this.supplierModel.create({
       id: supplier.id,
-      name: supplierDto.name,
-      email: supplierDto.email,
-      cnpj: supplierDto.cnpj,
-      phone: supplierDto.phone,
+      name: supplier.name.value,
+      email: supplier.email.value,
+      cnpj: supplier.cnpj.value,
+      phone: supplier.phone.value,
     })
   }
 

@@ -1,4 +1,5 @@
 import { HTTP_STATUS_CODE } from '../constants'
+import { AppError } from '../errors'
 
 type ApiResponseProps<Body> = {
   body?: Body
@@ -18,7 +19,7 @@ export class ApiResponse<Body = null> {
   }
 
   throwError() {
-    throw new Error(this.errorMessage)
+    throw new AppError(this.errorMessage)
   }
 
   get isSuccess() {
@@ -31,7 +32,7 @@ export class ApiResponse<Body = null> {
 
   get body(): Body {
     if (this._body === null) {
-      throw new Error('Api response error')
+      throw new AppError('Api response error')
     }
 
     return this._body

@@ -1,22 +1,24 @@
 import { Supplier } from '../../domain/entities'
 import type { SupplierDto } from '../../dtos'
+import { NotValidError } from '../../errors'
 import type { ISuppliersRepository } from '../../interfaces/repositories'
 
 export class RegisterSupplierUseCase {
   constructor(private readonly suppliersRepository: ISuppliersRepository) {}
 
   async execute(dto: SupplierDto) {
+    const supplier = Supplier.create(dto)
+
     const existingSupplierWithSameEmail = await this.suppliersRepository.findByEmail(
-      dto.email,
+      supplier.email.value,
     )
-    if (existingSupplierWithSameEmail) throw new Error('E-mail já em uso')
+    if (existingSupplierWithSameEmail) throw new NotValidError('E-mail já em uso')
 
     const existingSupplierWithSamePhone = await this.suppliersRepository.findByPhone(
-      dto.phone,
+      supplier.phone.value,
     )
-    if (existingSupplierWithSamePhone) throw new Error('Telefone já em uso')
+    if (existingSupplierWithSamePhone) throw new NotValidError('Telefone já em uso')
 
-    const supplier = Supplier.create(dto)
     await this.suppliersRepository.add(supplier)
   }
 }

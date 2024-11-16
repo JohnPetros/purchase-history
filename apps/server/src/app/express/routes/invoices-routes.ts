@@ -13,17 +13,17 @@ export function InvoicesRoutes() {
     .get('/invoices', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new ListInvoicesController()
-      controller.handle(http)
+      await controller.handle(http)
     })
     .get('/invoices/:invoiceId', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new GetInvoiceController()
-      controller.handle(http)
+      await controller.handle(http)
     })
     .post('/invoices', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new SendInvoiceController()
-      controller.handle(http)
+      await controller.handle(http)
     })
 
   return router

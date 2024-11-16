@@ -1,4 +1,5 @@
 import type { ProductDto } from '../../dtos'
+import { NotFoundError, NotValidError } from '../../errors'
 import type {
   IProductsRepository,
   ISuppliersRepository,
@@ -11,26 +12,24 @@ export class UpdadeProductUseCase {
   ) {}
 
   async execute(dto: Partial<ProductDto>, productId: string, supplierId: string) {
-    console.log('dto', dto)
-
     const product = await this.productsRepository.findById(productId)
 
     if (!product) {
-      throw new Error('Product does not exist')
+      throw new NotFoundError('Product does not exist')
     }
 
     if (dto.code) {
       const product = await this.productsRepository.findByCode(dto.code)
 
       if (product) {
-        throw new Error('Product with the same code already exists')
+        throw new NotValidError('Product with the same code already exists')
       }
     }
 
     const supplier = await this.suppliersRepository.findById(supplierId)
 
     if (!supplier) {
-      throw new Error('Supplier does not exist')
+      throw new NotValidError('Supplier does not exist')
     }
 
     product.supplier = supplier

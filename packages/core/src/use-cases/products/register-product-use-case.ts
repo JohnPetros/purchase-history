@@ -1,5 +1,6 @@
 import { Product } from '../../domain/entities'
 import type { ProductDto } from '../../dtos'
+import { NotFoundError, NotValidError } from '../../errors'
 import type {
   IProductsRepository,
   ISuppliersRepository,
@@ -17,13 +18,13 @@ export class RegisterProductUseCase {
     )
 
     if (existingProductWithCode) {
-      throw new Error('Product with the same code already exists')
+      throw new NotValidError('Product with the same code already exists')
     }
 
     const supplier = await this.suppliersRepository.findById(supplierId)
 
     if (!supplier) {
-      throw new Error('Supplier not found')
+      throw new NotFoundError('Supplier not found')
     }
 
     const product = Product.create(productDto)

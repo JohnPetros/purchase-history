@@ -15,27 +15,27 @@ export function ProductsRoutes() {
     .get('/products', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new ListProductsController()
-      controller.handle(http)
+      await controller.handle(http)
     })
     .get('/products/:productId', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new GetProductController()
-      controller.handle(http)
+      await controller.handle(http)
     })
     .post('/products', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new RegisterProductController()
-      controller.handle(http)
+      await controller.handle(http)
     })
     .put('/products/:productId', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new UpdateProductController()
-      controller.handle(http)
+      await controller.handle(http)
     })
     .delete('/products/:productId', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new DeleteProductController()
-      controller.handle(http)
+      await controller.handle(http)
     })
 
   return router
