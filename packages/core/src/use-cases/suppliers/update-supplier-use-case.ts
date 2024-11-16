@@ -5,8 +5,8 @@ import type { ISuppliersRepository } from '../../interfaces/repositories'
 export class UpdateSupplierUseCase {
   constructor(private readonly suppliersRepository: ISuppliersRepository) {}
 
-  async execute(dto: Partial<SupplierDto>, id: string) {
-    const supplier = await this.suppliersRepository.findById(id)
+  async execute(dto: Partial<SupplierDto>, supplierId: string) {
+    const supplier = await this.suppliersRepository.findById(supplierId)
 
     if (!supplier) throw new NotFoundError('Supplier not found')
 
@@ -22,5 +22,7 @@ export class UpdateSupplierUseCase {
 
     const updatedSupplier = supplier.update(dto)
     await this.suppliersRepository.update(updatedSupplier)
+
+    return updatedSupplier.dto
   }
 }

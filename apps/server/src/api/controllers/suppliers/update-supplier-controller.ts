@@ -15,8 +15,8 @@ export class UpdateSupplierController {
     const { supplierId } = http.getRouteParams<RouteParams>()
     const supplierDto = http.getBody<Body>()
     const useCase = new UpdateSupplierUseCase(suppliersRepository)
-    await useCase.execute(supplierDto, supplierId)
+    const updatedSupplier = await useCase.execute(supplierDto, supplierId)
 
-    return http.send(null)
+    return http.send(updatedSupplier)
   }
 }
