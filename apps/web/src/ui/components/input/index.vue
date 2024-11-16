@@ -6,6 +6,7 @@ defineProps({
   label: String,
   name: String,
   type: String,
+  default: String,
   placeholder: String,
 })
 </script>
@@ -17,6 +18,7 @@ defineProps({
       :id="id"
       :name="name" 
       :type="type" 
+      default="ggggggggggggggggggggggg"
       :placeholder="placeholder" 
       class="!bg-slate-700 !text-slate-50 !border-transparent !w-full" 
     />

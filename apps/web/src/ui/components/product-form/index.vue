@@ -1,40 +1,70 @@
 <script setup lang="ts">
-import { Form, type FormSubmitEvent } from '@primevue/forms'
+import { Form } from '@primevue/forms'
 
 import Input from '@/ui/components/input/index.vue'
 import Textarea from '@/ui/components/textarea/index.vue'
 import Button from '@/ui/components/button/index.vue'
 import SuppliersSelect from '@/ui/components/suppliers-select/index.vue'
+import type { Product } from '@purchase-history/core/entities'
+import { useProductForm } from './use-product-form'
+
+type Props = {
+  product?: Product
+}
 
 const emit = defineEmits(['submit'])
 
-function handleSubmit({ states, reset }: FormSubmitEvent) {
-  const productDto = {
-    name: states.name.value,
-    description: states.description.value,
-    code: states.code.value,
-    price: Number(states.price.value),
-  }
-  emit('submit', productDto, states.supplierId.value)
-  reset()
-}
+const { product } = defineProps<Props>()
+
+const { initialValues, handleSubmit } = useProductForm(
+  product,
+  (productDto, supplierId) => emit('submit', productDto, supplierId),
+)
 </script>
 
 <template>
-  <Form v-slot="$form" @submit="handleSubmit" class="space-y-3">
+  <Form @submit="handleSubmit" :initial-values="initialValues" class="space-y-3">
     <div class="grid grid-cols-2 gap-3">
-      <Input id="name" label="Name" name="name" type="text" placeholder="Simplex" />
-      <Input id="name" label="Code" name="code" type="text" placeholder="xgkivm" />
+      <Input 
+        id="name" 
+        label="Name" 
+        name="name" 
+        type="text" 
+        placeholder="Simplex" 
+      />
+      <Input 
+        id="name" 
+        label="Code" 
+        name="code" 
+        type="text" 
+        placeholder="xgkivm" 
+      />
     </div>
     <div class="grid grid-cols-2 gap-3">
-      <Input id="price" label="Price" name="price" type="text" placeholder="50.00" />
-      <SuppliersSelect id="supplierId" name="supplierId" label="Supplier" />
+      <Input 
+        id="price" 
+        label="Price" 
+        name="price" 
+        type="number" 
+        placeholder="50.00"
+      />
+      <SuppliersSelect
+        id="supplierId" 
+        name="supplierId" 
+        label="Supplier" 
+        :default-value="product?.supplier?.id"
+      />
     </div>
     <div class="mt-3">
-      <Textarea id="description" label="Description" name="description" placeholder="Simplex" />
+      <Textarea 
+        id="description" 
+        label="Description" 
+        name="description" 
+        placeholder="Simplex"
+      />
     </div>
     <Button type="submit">
-      Register
+      Confirm
     </Button>
   </Form>
 </template>

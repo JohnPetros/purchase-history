@@ -1,13 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import ProductsPage from '../ui/pages/products-page/index.vue'
+import ProductPage from '../ui/pages/product-page/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'products',
       component: ProductsPage,
+    },
+    {
+      path: '/products/:productId',
+      name: 'product',
+      component: ProductPage,
     },
   ],
 })
