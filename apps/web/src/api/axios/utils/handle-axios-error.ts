@@ -5,9 +5,9 @@ import { ApiResponse } from '@purchase-history/core/responses'
 export function handleAxiosError<ResponseBody>(axiosError: unknown) {
   if (isAxiosError(axiosError)) {
     console.log('Axios Error: ')
-    console.log(axiosError.response?.data)
+    console.log(axiosError.response?.data.message)
     return new ApiResponse({
-      errorMessage: axiosError.message,
+      errorMessage: axiosError.response?.data.message,
       statusCode: axiosError.response?.status,
     }) as ApiResponse<ResponseBody>
   }

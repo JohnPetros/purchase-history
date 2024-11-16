@@ -15,8 +15,8 @@ export class Supplier extends Entity<SupplierProps> {
       {
         name: Text.create(dto.name, 'name'),
         email: Email.create(dto.email),
-        cnpj: Text.create(dto.cnpj, 'cnpj'),
-        phone: Text.create(dto.phone, 'phone'),
+        cnpj: Text.create(dto.cnpj, 'ein', true),
+        phone: Text.create(dto.phone, 'phone', true),
       },
       dto.id,
     )
@@ -42,7 +42,7 @@ export class Supplier extends Entity<SupplierProps> {
     return this.props.phone
   }
 
-  get dto() {
+  get dto(): SupplierDto {
     return {
       id: this.id,
       name: this.name.value,
