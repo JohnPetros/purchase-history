@@ -28,7 +28,6 @@ export function useSupplierForm(
       if (states.email.dirty) supplierDto.email = states.email.value
       if (states.cnpj.dirty) supplierDto.cnpj = states.cnpj.value
       if (states.phone.dirty) supplierDto.phone = states.phone.value
-      console.log(supplierDto)
       onSubmit(supplierDto)
       return
     }

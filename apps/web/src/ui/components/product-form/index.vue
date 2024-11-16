@@ -16,7 +16,7 @@ const emit = defineEmits(['submit'])
 
 const { product } = defineProps<Props>()
 
-const { initialValues, handleSubmit } = useProductForm(
+const { initialValues, isSubmitting, handleSubmit } = useProductForm(
   product,
   (productDto, supplierId) => emit('submit', productDto, supplierId),
 )
@@ -63,7 +63,7 @@ const { initialValues, handleSubmit } = useProductForm(
         placeholder="Simplex"
       />
     </div>
-    <Button type="submit">
+    <Button type="submit" :loading="isSubmitting" loading-icon="pi pi-search">
       Confirm
     </Button>
   </Form>

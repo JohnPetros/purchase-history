@@ -4,6 +4,7 @@ import type { ProductDto } from '@purchase-history/core/dtos'
 import { Product } from '@purchase-history/core/entities'
 
 import { productsService } from '@/api'
+import { useToastMessage } from '@/ui/composables'
 
 type Return = {
   products: Ref<Product[]>
@@ -12,11 +13,17 @@ type Return = {
 }
 
 export function useProductsPage(drawerRef: Ref): Return {
+  const toastMessage = useToastMessage()
   const products = ref<Product[]>([])
   const isProductsLoading = ref(true)
 
   async function handleProductFormSubmit(productDto: ProductDto, supplierId: string) {
     const response = await productsService.registerProduct(productDto, supplierId)
+
+    if (response.isFailure) {
+      toastMessage.showError(response.errorMessage)
+      return
+    }
 
     if (response.isSuccess) {
       products.value.unshift(Product.create(response.body))

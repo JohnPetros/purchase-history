@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import { useTemplateRef } from 'vue'
+import { Skeleton } from 'primevue'
+
 import Page from '@/ui/layouts/page-layout/index.vue'
 import Container from '@/ui/components/container/index.vue'
 import Code from '@/ui/components/code/index.vue'
@@ -10,20 +13,20 @@ import ProductForm from '@/ui/components/product-form/index.vue'
 import ConfirmDialog from '@/ui/components/confirm-dialog/index.vue'
 
 import { useProductPage } from './use-product-page'
-import { useTemplateRef } from 'vue'
 
 const drawerRef = useTemplateRef('drawer')
 
-const { product, handleProductFormSubmit, handleDeleteButtonClick } = useProductPage(() =>
-  drawerRef.value?.close(),
-)
+const { product, isProductLoading, handleProductFormSubmit, handleDeleteButtonClick } =
+  useProductPage(() => drawerRef.value?.close())
 </script>
 
 <template>
   <Page>
     <GoBackLink href="/" />
 
-    <Container v-show="product" class-name="mt-6 space-x-3">
+    <Skeleton v-if="isProductLoading" width="full" height="5.5rem" class="!bg-slate-800 !mt-6"></Skeleton>
+
+    <Container v-if="product" class-name="mt-6 space-x-3">
       <Drawer ref='drawer' title="Edit product">
         <template #content>
           <ProductForm :product="product ?? undefined"  @submit="handleProductFormSubmit" /> 
@@ -38,6 +41,8 @@ const { product, handleProductFormSubmit, handleDeleteButtonClick } = useProduct
         Delete
       </ConfirmDialog>
     </Container>
+
+    <Skeleton v-if="isProductLoading" width="full" height="12rem" class="!bg-slate-800 !mt-6"></Skeleton>
 
     <Container v-if="product" class-name="mt-6">
      <div class="flex items-center justify-between">
