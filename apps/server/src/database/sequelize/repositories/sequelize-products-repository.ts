@@ -8,7 +8,9 @@ export class SequelizeProductsRepository implements IProductsRepository {
   constructor(private readonly productModel: typeof ProductModel) {}
 
   async findById(productId: string): Promise<Product | null> {
-    const sequelizeProduct = await this.productModel.findByPk(productId)
+    const sequelizeProduct = await this.productModel.findByPk(productId, {
+      include: SupplierModel,
+    })
 
     if (!sequelizeProduct) return null
 
