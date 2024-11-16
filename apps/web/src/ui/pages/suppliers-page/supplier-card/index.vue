@@ -11,7 +11,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <Card :link="`/products/${id}`">
+  <Card :link="`/suppliers/${id}`">
    <div>
       <h2 class="inline-block mr-3 text-slate-50 font-bold">{{ name }}</h2>
       <strong class="text-slate-300 text-sm">{{ email }}</strong>

@@ -6,8 +6,8 @@ import Page from '@/ui/layouts/page-layout/index.vue'
 import PlusButton from '@/ui/components/plus-button/index.vue'
 import Drawer from '@/ui/components/drawer/index.vue'
 import { useSuppliersPage } from './use-suppliers-page'
-import SupplierForm from '@/ui/components/supplier-form/index.vue'
 import SupplierCard from '@/ui/pages/suppliers-page/supplier-card/index.vue'
+import SupplierForm from '../../components/supplier-form/index.vue'
 
 const drawerRef = useTemplateRef('drawer')
 const { suppliers, isSuppliersLoading, handleSupplierFormSubmit } =

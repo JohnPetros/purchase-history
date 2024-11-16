@@ -27,8 +27,6 @@ export function useProductPage(closeDrawer: VoidFunction): Return {
       product.value?.id,
     )
 
-    console.log(response.isSuccess)
-
     if (response.isSuccess) {
       product.value = Product.create(response.body)
       closeDrawer()
