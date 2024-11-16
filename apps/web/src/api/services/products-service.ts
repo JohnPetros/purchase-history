@@ -3,6 +3,10 @@ import type { IApiClient, IProductsService } from '@purchase-history/core/interf
 
 export const ProductsService = (apiClient: IApiClient): IProductsService => {
   return {
+    async getProduct(productId) {
+      return await apiClient.get<ProductDto>(`/products/${productId}`)
+    },
+
     async listProducts() {
       return await apiClient.get<ProductDto[]>('/products')
     },
@@ -12,6 +16,17 @@ export const ProductsService = (apiClient: IApiClient): IProductsService => {
         product: productDto,
         supplierId,
       })
+    },
+
+    async updateProduct(productDto, supplierId, productId) {
+      return await apiClient.put<ProductDto>(`/products/${productId}`, {
+        product: productDto,
+        supplierId,
+      })
+    },
+
+    async deleteProduct(productId) {
+      return await apiClient.delete(`/products/${productId}`)
     },
   }
 }
