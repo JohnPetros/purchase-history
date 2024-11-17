@@ -1,12 +1,17 @@
 import type { Includeable } from 'sequelize'
+import { v4 as uuid } from 'uuid'
 
-import { Invoice } from '@purchase-history/core/entities'
 import type { IInvoicesRepository } from '@purchase-history/core/interfaces'
+import type { InvoiceStatus } from '@purchase-history/core/types'
+import { Invoice } from '@purchase-history/core/entities'
 
 import type { SequelizeInvoice } from '../types'
-import { ProductModel, type InvoiceModel } from '../models'
-import { InvoiceItemModel } from '../models/invoice-item-model'
-import { CustomerModel } from '../models/customer-model'
+import {
+  ProductModel,
+  CustomerModel,
+  InvoiceItemModel,
+  type InvoiceModel,
+} from '../models'
 
 export class SequelizeInvoicesRepository implements IInvoicesRepository {
   constructor(
@@ -14,6 +19,13 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
     private readonly invoiceItemModel: typeof InvoiceItemModel,
     private readonly customerModel: typeof CustomerModel,
   ) {}
+
+  async updateStatus(invoiceStatus: InvoiceStatus, invoiceId: string): Promise<void> {
+    await this.invoiceModel.update(
+      { status: invoiceStatus },
+      { where: { id: invoiceId } },
+    )
+  }
 
   async findById(InvoiceId: string): Promise<Invoice | null> {
     const sequelizeInvoice = await this.invoiceModel.findByPk(InvoiceId, {
@@ -68,6 +80,7 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
 
     for (const item of invoice.items) {
       await this.invoiceItemModel.create({
+        id: uuid(),
         invoiceId: invoice.id,
         productId: item.product.id,
         itemsCount: item.itemsCount.value,

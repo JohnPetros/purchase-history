@@ -16,5 +16,9 @@ export const InvoicesService = (apiClient: IApiClient): IInvoicesService => {
         items: invoiceItems,
       })
     },
+
+    async toggleInvoiceStatus(invoiceId) {
+      return await apiClient.patch(`/invoices/status/${invoiceId}`)
+    },
   }
 }

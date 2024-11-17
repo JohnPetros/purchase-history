@@ -59,6 +59,18 @@ export const AxiosApiClient = (): IApiClient => {
       }
     },
 
+    async patch<ResponseBody>(
+      url: string,
+      body?: unknown,
+    ): Promise<ApiResponse<ResponseBody>> {
+      try {
+        const response = await axios.patch(url, body)
+        return sendResponse(response)
+      } catch (error) {
+        return handleAxiosError<ResponseBody>(error)
+      }
+    },
+
     async delete<ResponseBody>(url: string): Promise<ApiResponse<ResponseBody>> {
       try {
         const response = await axios.delete(url)
