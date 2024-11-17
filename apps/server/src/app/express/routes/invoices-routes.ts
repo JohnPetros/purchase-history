@@ -4,6 +4,7 @@ import {
   GetInvoiceController,
   ListInvoicesController,
   SendInvoiceController,
+  ToggleInvoiceStatusController,
 } from 'src/api/controllers'
 
 export function InvoicesRoutes() {
@@ -23,6 +24,11 @@ export function InvoicesRoutes() {
     .post('/invoices', async (request, response) => {
       const http = new ExpressHttp(request, response)
       const controller = new SendInvoiceController()
+      await controller.handle(http)
+    })
+    .patch('/invoices/status/:invoiceId', async (request, response) => {
+      const http = new ExpressHttp(request, response)
+      const controller = new ToggleInvoiceStatusController()
       await controller.handle(http)
     })
 

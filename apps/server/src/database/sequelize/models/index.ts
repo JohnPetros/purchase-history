@@ -1,3 +1,5 @@
 export { ProductModel } from './product-model'
 export { SupplierModel } from './supplier-model'
 export { InvoiceModel } from './invoice-model'
+export { InvoiceItemModel } from './invoice-item-model'
+export { CustomerModel } from './customer-model'

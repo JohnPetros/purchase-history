@@ -37,9 +37,6 @@ export class ExpressApp implements IApp {
   }
 
   private handleError(error: Error, _: Request, response: Response, __: NextFunction) {
-    console.error('Error Name:', error.name)
-    console.error('Error message:', error.message)
-
     if (error instanceof AppError) {
       const responseError = {
         title: error.title,
@@ -58,6 +55,9 @@ export class ExpressApp implements IApp {
         return
       }
     }
+
+    console.error('Error Name:', error.name)
+    console.error('Error message:', error.message)
 
     response
       .status(HTTP_STATUS_CODE.serverError)
