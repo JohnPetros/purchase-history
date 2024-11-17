@@ -5,7 +5,7 @@ import { Email, Text } from '../structs'
 type SupplierProps = {
   name: Text
   email: Text
-  cnpj: Text
+  ein: Text
   phone: Text
 }
 
@@ -15,7 +15,7 @@ export class Supplier extends Entity<SupplierProps> {
       {
         name: Text.create(dto.name, 'name'),
         email: Email.create(dto.email),
-        cnpj: Text.create(dto.cnpj, 'ein', true),
+        ein: Text.create(dto.ein, 'ein', true),
         phone: Text.create(dto.phone, 'phone', true),
       },
       dto.id,
@@ -34,8 +34,8 @@ export class Supplier extends Entity<SupplierProps> {
     return this.props.email
   }
 
-  get cnpj() {
-    return this.props.cnpj
+  get ein() {
+    return this.props.ein
   }
 
   get phone() {
@@ -47,7 +47,7 @@ export class Supplier extends Entity<SupplierProps> {
       id: this.id,
       name: this.name.value,
       email: this.email.value,
-      cnpj: this.cnpj.value,
+      ein: this.ein.value,
       phone: this.phone.value,
     }
   }
