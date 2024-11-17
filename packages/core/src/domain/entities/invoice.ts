@@ -29,7 +29,6 @@ type InvoiceProps = {
 
 export class Invoice extends Entity<InvoiceProps> {
   static create(dto: InvoiceDto) {
-    console.log(dto)
     let items: InvoiceItem[] = []
 
     if (dto.items) {
@@ -65,6 +64,10 @@ export class Invoice extends Entity<InvoiceProps> {
     this.props.items.push(item)
   }
 
+  toggleStatus() {
+    this.props.status = this.status === 'paid' ? 'pending' : 'paid'
+  }
+
   get amount() {
     const value = this.items.reduce(
       (total, item) => item.product.price.value * item.itemsCount.value + total,
@@ -98,6 +101,7 @@ export class Invoice extends Entity<InvoiceProps> {
     return {
       id: this.id,
       status: this.status,
+      number: this.number.value,
       items: this.items.map((item) => ({
         product: item.product.dto,
         itemsCount: item.itemsCount.value,

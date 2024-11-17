@@ -19,4 +19,12 @@ export class Price {
 
     return formatter.format(this.value)
   }
+
+  sum(value: number) {
+    return new Price(this.value + value)
+  }
+
+  multiply(value: number) {
+    return new Price(this.value * value)
+  }
 }
