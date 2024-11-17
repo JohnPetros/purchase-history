@@ -13,4 +13,5 @@ export interface IInvoicesService {
     invoiceDto: InvoiceDto,
     invoiceItems: InvoiceItem[],
   ): Promise<ApiResponse<InvoiceDto>>
+  toggleInvoiceStatus(invoiceId: string): Promise<ApiResponse>
 }
