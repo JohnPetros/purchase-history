@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import Input from '@/ui/components/input/index.vue'
-import { computed, ref } from 'vue'
 import { useItemInput } from './use-item-input'
-import { FormField } from '@primevue/forms'
 
 type Props = {
   id: string
@@ -22,7 +20,7 @@ const { itemPrice, amount, handleItemsCountChange } = useItemInput(price, (items
 <template>
   <div class="flex items-center gap-3">
     <Input type="text" label="Name" :default="name" readonly />
-    <Input type="number" label="Qty." default="1" @change="handleItemsCountChange" />
+    <Input type="number" label="Qty." min="1" default="1" @change="handleItemsCountChange" />
     <Input type="text" label="Price" :default="itemPrice" readonly />
     <Input type="text" label="Amount" :default="amount" readonly />
     <button type="button" class="group grid place-content-center p-2 mt-8" @click="emit('delete', id)">

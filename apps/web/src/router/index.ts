@@ -5,6 +5,7 @@ import ProductPage from '../ui/pages/product-page/index.vue'
 import SuppliersPage from '../ui/pages/suppliers-page/index.vue'
 import SupplierPage from '../ui/pages/supplier-page/index.vue'
 import InvoicesPage from '../ui/pages/invoices-page/index.vue'
+import InvoicePage from '../ui/pages/invoice-page/index.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/invoices',
       name: 'invoices',
       component: InvoicesPage,
+    },
+    {
+      path: '/invoices/:invoiceId',
+      name: 'invoice',
+      component: InvoicePage,
     },
   ],
 })

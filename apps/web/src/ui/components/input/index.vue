@@ -10,6 +10,7 @@ defineProps({
   type: String,
   default: String,
   placeholder: String,
+  min: String,
   readonly: Boolean,
   classes: String,
 })
@@ -29,6 +30,7 @@ function handleValueChange(value: string | undefined) {
       :defaultValue="default"
       :placeholder="placeholder"
       :readonly="readonly"
+      :min="min"
       class="!bg-slate-700 !text-slate-50 !border-transparent !w-full" 
       @value-change="handleValueChange"
     />

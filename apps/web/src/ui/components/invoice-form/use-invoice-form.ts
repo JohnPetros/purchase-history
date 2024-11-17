@@ -12,6 +12,7 @@ type Return = {
   isSubmitting: Ref<boolean>
   products: Ref<Product[]>
   selectedItemsIds: Ref<string[]>
+  selectedItems: Ref<Record<string, number>>
   isDialogVisible: Ref<boolean>
   handleSubmit: (event: FormSubmitEvent) => void
   handleSelectItems: VoidFunction
@@ -28,10 +29,10 @@ export function useInvoiceForm(
   ) => void,
 ): Return {
   const isSubmitting = ref(false)
-  const selectedItemsIds = ref<string[]>([])
   const products = ref<Product[]>([])
   const isDialogVisible = ref(false)
-  const selectedItems: Record<string, number> = {}
+  const selectedItemsIds = ref<string[]>([])
+  const selectedItems = ref<Record<string, number>>({})
 
   const initialValues = invoice
     ? {
@@ -59,28 +60,28 @@ export function useInvoiceForm(
     }
     onSubmit(
       invoiceDto,
-      Object.keys(selectedItems),
-      Object.values(selectedItems).map(Number),
+      Object.keys(selectedItems.value),
+      Object.values(selectedItems.value).map(Number),
     )
   }
 
   function handleSelectItems() {
     for (const itemId of selectedItemsIds.value) {
-      selectedItems[itemId] = 1
+      selectedItems.value[itemId] = 1
     }
 
     isDialogVisible.value = false
   }
 
   function handleItemCountChange(itemId: string, itemsCount: number) {
-    selectedItems[itemId] = itemsCount
+    selectedItems.value[itemId] = itemsCount
   }
 
   function handleDeleteItemButtonClick(itemId: string) {
     selectedItemsIds.value = selectedItemsIds.value.filter(
       (selectedItem) => selectedItem !== itemId,
     )
-    delete selectedItems[itemId]
+    delete selectedItems.value[itemId]
   }
 
   watch(isSubmitting, () => {
@@ -103,6 +104,7 @@ export function useInvoiceForm(
     isDialogVisible,
     products,
     selectedItemsIds,
+    selectedItems,
     handleSubmit,
     handleSelectItems,
     handleItemCountChange,

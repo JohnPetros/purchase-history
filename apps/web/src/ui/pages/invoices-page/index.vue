@@ -9,8 +9,6 @@ import Drawer from '@/ui/components/drawer/index.vue'
 import InvoiceCard from '@/ui/pages/invoices-page/invoice-card/index.vue'
 
 import { useInvoicesPage } from './use-invoices-page'
-import { ref } from 'vue'
-import { Button } from 'primevue'
 
 const drawerRef = useTemplateRef('drawer')
 const { invoices, isInvoicesLoading, handleInvoiceFormSubmit } =
@@ -36,8 +34,6 @@ const { invoices, isInvoicesLoading, handleInvoiceFormSubmit } =
             </template>
         </Drawer>
       </header>
-
-      
 
 
       <div v-if="isInvoicesLoading" class="mt-12 mx-auto w-max">

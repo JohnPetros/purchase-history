@@ -23,6 +23,7 @@ const {
   initialValues,
   products,
   selectedItemsIds,
+  selectedItems,
   isSubmitting,
   isDialogVisible,
   handleSubmit,
@@ -75,10 +76,10 @@ const {
         placeholder="40202"
       />
     </div>
-    <div class="mt-3">
-      <div v-for="product in products" class="space-y-3">
+    <div class="mt-3 space-y-3">
+      <div v-for="product in products">
         <ItemInput 
-          v-if="selectedItemsIds.includes(product.id)" 
+          v-if="Object.keys(selectedItems).includes(product.id)" 
           :key="product.id" 
           :id="product.id" 
           :name="product.name.value" 
