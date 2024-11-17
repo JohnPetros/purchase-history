@@ -10,15 +10,6 @@ export function useSupplierForm(
 ) {
   const isSubmitting = ref(false)
 
-  const initialValues = supplier
-    ? {
-        name: supplier.name.value,
-        email: supplier.email.value,
-        cnpj: supplier.cnpj.value,
-        phone: supplier.phone.value,
-      }
-    : undefined
-
   function handleSubmit({ states }: FormSubmitEvent) {
     isSubmitting.value = true
 
@@ -26,7 +17,7 @@ export function useSupplierForm(
       const supplierDto: Partial<SupplierDto> = {}
       if (states.name.dirty) supplierDto.name = states.name.value
       if (states.email.dirty) supplierDto.email = states.email.value
-      if (states.cnpj.dirty) supplierDto.cnpj = states.cnpj.value
+      if (states.ein.dirty) supplierDto.ein = states.ein.value
       if (states.phone.dirty) supplierDto.phone = states.phone.value
       onSubmit(supplierDto)
       return
@@ -35,7 +26,7 @@ export function useSupplierForm(
     const supplierDto: SupplierDto = {
       name: states.name.value,
       email: states.email.value,
-      cnpj: states.cnpj.value,
+      ein: states.ein.value,
       phone: states.phone.value,
     }
     onSubmit(supplierDto)
@@ -49,7 +40,6 @@ export function useSupplierForm(
   })
 
   return {
-    initialValues,
     isSubmitting,
     handleSubmit,
   }

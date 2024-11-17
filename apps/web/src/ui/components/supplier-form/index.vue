@@ -14,14 +14,13 @@ type Props = {
 const { supplier } = defineProps<Props>()
 const emit = defineEmits(['submit'])
 
-const { initialValues, isSubmitting, handleSubmit } = useSupplierForm(
-  supplier,
-  (supplierDto) => emit('submit', supplierDto),
+const { isSubmitting, handleSubmit } = useSupplierForm(supplier, (supplierDto) =>
+  emit('submit', supplierDto),
 )
 </script>
 
 <template>
-  <Form @submit="handleSubmit" :initial-values="initialValues" class="space-y-3">
+  <Form @submit="handleSubmit" class="space-y-3">
     <div class="grid grid-cols-2 gap-3">
       <Input 
         id="name" 
@@ -40,9 +39,9 @@ const { initialValues, isSubmitting, handleSubmit } = useSupplierForm(
     </div>
     <div class="grid grid-cols-2 gap-3">
       <Input 
-        id="cnpj" 
+        id="ein" 
         label="EIN" 
-        name="cnpj" 
+        name="ein" 
         type="text" 
         placeholder="12-3456789"
       />

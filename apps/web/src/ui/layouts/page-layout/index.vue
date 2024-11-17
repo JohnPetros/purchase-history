@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router'
 import Toast from 'primevue/toast'
+import { DynamicDialog } from 'primevue'
 
 const { path } = useRoute()
 </script>
 
 <template>
   <Toast />
+  <DynamicDialog />
   <div class="min-h-screen overflow-x-hidden">
     <aside
       class="fixed flex flex-col justify-between top-0 left-0 bottom-0 bg-slate-800 rounded-r-3xl"

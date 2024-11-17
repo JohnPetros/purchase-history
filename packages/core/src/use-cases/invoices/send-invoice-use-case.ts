@@ -1,6 +1,7 @@
 import { Invoice } from '../../domain/entities/invoice'
 import { Integer } from '../../domain/structs'
 import type { InvoiceDto } from '../../dtos'
+import { NotValidError } from '../../errors'
 import type {
   IInvoicesRepository,
   IProductsRepository,
@@ -18,6 +19,10 @@ export class SendInvoiceUseCase {
   ) {}
 
   async execute(dto: InvoiceDto, items: Item[]) {
+    if (!items.length) {
+      throw new NotValidError('The count of items must be greater than zero')
+    }
+
     const invoice = Invoice.create(dto)
 
     for (const item of items) {
@@ -30,8 +35,7 @@ export class SendInvoiceUseCase {
       })
     }
 
-    console.log(invoice.items)
-
     await this.invoicesRepository.add(invoice)
+    return invoice.dto
   }
 }

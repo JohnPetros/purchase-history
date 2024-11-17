@@ -14,8 +14,8 @@ export class SendInvoiceController {
   async handle(http: IHttp) {
     const { invoice, items } = http.getBody<Body>()
     const useCase = new SendInvoiceUseCase(invoicesRepository, productsRepository)
-    await useCase.execute(invoice, items)
+    const sentInvoice = await useCase.execute(invoice, items)
 
-    return http.send(null, HTTP_STATUS_CODE.created)
+    return http.send(sentInvoice, HTTP_STATUS_CODE.created)
   }
 }
