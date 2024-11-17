@@ -1,7 +1,7 @@
 import type { InvoiceDto } from '../../dtos'
 import type { InvoiceStatus } from '../../types'
 import { Entity } from '../abstracts/entity'
-import { Datetime, Integer } from '../structs'
+import { Datetime, Email, Integer, Price, Text } from '../structs'
 import { Product } from './product'
 
 type InvoiceItem = {
@@ -9,14 +9,27 @@ type InvoiceItem = {
   itemsCount: Integer
 }
 
+type InvoiceCustomer = {
+  name: Text
+  email: Text
+  address: {
+    zipcode: Text
+    city: Text
+    state: Text
+  }
+}
+
 type InvoiceProps = {
   items: InvoiceItem[]
   status: InvoiceStatus
+  number: Integer
   sentAt: Datetime
+  customer: InvoiceCustomer
 }
 
 export class Invoice extends Entity<InvoiceProps> {
   static create(dto: InvoiceDto) {
+    console.log(dto)
     let items: InvoiceItem[] = []
 
     if (dto.items) {
@@ -32,7 +45,17 @@ export class Invoice extends Entity<InvoiceProps> {
       {
         items,
         status: dto.status ?? 'pending',
-        sentAt: Datetime.create(dto.sentAt, 'sending date'),
+        sentAt: Datetime.create(dto.sentAt),
+        number: Integer.create(dto.number ?? 1, 'number'),
+        customer: {
+          name: Text.create(dto.customer.name, 'customer name'),
+          email: Email.create(dto.customer.email),
+          address: {
+            city: Text.create(dto.customer.address.city, 'city name'),
+            state: Text.create(dto.customer.address.state, 'state name'),
+            zipcode: Text.create(dto.customer.address.zipcode, 'zipcode'),
+          },
+        },
       },
       dto.id,
     )
@@ -40,6 +63,15 @@ export class Invoice extends Entity<InvoiceProps> {
 
   addItem(item: InvoiceItem) {
     this.props.items.push(item)
+  }
+
+  get amount() {
+    const value = this.items.reduce(
+      (total, item) => item.product.price.value * item.itemsCount.value + total,
+      0,
+    )
+
+    return Price.create(value)
   }
 
   get status() {
@@ -50,8 +82,16 @@ export class Invoice extends Entity<InvoiceProps> {
     return this.props.items
   }
 
+  get number() {
+    return this.props.number
+  }
+
   get sentAt() {
     return this.props.sentAt
+  }
+
+  get customer() {
+    return this.props.customer
   }
 
   get dto(): InvoiceDto {
@@ -63,6 +103,15 @@ export class Invoice extends Entity<InvoiceProps> {
         itemsCount: item.itemsCount.value,
       })),
       sentAt: this.sentAt.value,
+      customer: {
+        name: this.customer.name.value,
+        email: this.customer.email.value,
+        address: {
+          city: this.customer.address.city.value,
+          state: this.customer.address.state.value,
+          zipcode: this.customer.address.zipcode.value,
+        },
+      },
     }
   }
 }
