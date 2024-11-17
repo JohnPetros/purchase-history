@@ -2,6 +2,6 @@ export type SupplierDto = {
   id?: string
   name: string
   email: string
-  cnpj: string
+  ein: string
   phone: string
 }
