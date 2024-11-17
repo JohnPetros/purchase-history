@@ -1,12 +1,15 @@
 import { DataTypes } from 'sequelize'
-import { sequelize } from '../client'
-import type { SequelizeSupplier } from '../types'
+import { v4 as uuid } from 'uuid'
 
-export const SupplierModel = sequelize.define<SequelizeSupplier>('suppliers', {
+import { sequelize } from '../client'
+import type { SequelizeCustomer } from '../types'
+
+export const CustomerModel = sequelize.define<SequelizeCustomer>('customer', {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
     allowNull: false,
+    defaultValue: uuid(),
   },
   name: {
     type: DataTypes.STRING,
@@ -16,11 +19,15 @@ export const SupplierModel = sequelize.define<SequelizeSupplier>('suppliers', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  ein: {
+  state: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  phone: {
+  city: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  zipcode: {
     type: DataTypes.STRING,
     allowNull: false,
   },

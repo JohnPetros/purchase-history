@@ -47,7 +47,7 @@ export class SequelizeSuppliersRepository implements ISuppliersRepository {
       {
         name: supplierDto.name,
         email: supplierDto.email,
-        cnpj: supplierDto.cnpj,
+        ein: supplierDto.ein,
         phone: supplierDto.phone,
       },
       { where: { id: supplier.id } },
@@ -63,7 +63,7 @@ export class SequelizeSuppliersRepository implements ISuppliersRepository {
       id: supplier.id,
       name: supplier.name.value,
       email: supplier.email.value,
-      cnpj: supplier.cnpj.value,
+      ein: supplier.ein.value,
       phone: supplier.phone.value,
     })
   }
@@ -73,7 +73,7 @@ export class SequelizeSuppliersRepository implements ISuppliersRepository {
       id: sequelizeSupplier.id,
       name: sequelizeSupplier.name,
       email: sequelizeSupplier.email,
-      cnpj: sequelizeSupplier.cnpj,
+      ein: sequelizeSupplier.ein,
       phone: sequelizeSupplier.phone,
     })
   }

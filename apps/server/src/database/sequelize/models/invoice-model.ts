@@ -4,6 +4,7 @@ import { sequelize } from '../client'
 import { InvoiceItemModel } from './invoice-item-model'
 import type { SequelizeInvoice } from '../types'
 import { ProductModel } from './product-model'
+import { CustomerModel } from './customer-model'
 
 export const InvoiceModel = sequelize.define<SequelizeInvoice>('invoices', {
   id: {
@@ -14,6 +15,12 @@ export const InvoiceModel = sequelize.define<SequelizeInvoice>('invoices', {
   status: {
     type: DataTypes.ENUM('pending', 'paid'),
     allowNull: false,
+  },
+  number: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    allowNull: false,
+    unique: true,
   },
 })
 
@@ -36,5 +43,10 @@ InvoiceModel.hasMany(InvoiceItemModel, {
 
 InvoiceItemModel.belongsTo(InvoiceModel, {
   foreignKey: 'invoiceId',
+  constraints: true,
+})
+
+InvoiceModel.belongsTo(CustomerModel, {
+  foreignKey: 'customerId',
   constraints: true,
 })
