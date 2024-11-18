@@ -1,9 +1,9 @@
 import type { Invoice } from '../../domain/entities/invoice'
-import type { InvoiceStatus } from '../../types'
+import type { InvoicesListParams, InvoiceStatus } from '../../types'
 
 export interface IInvoicesRepository {
   findById(invoiceId: string): Promise<Invoice | null>
-  findMany(): Promise<Invoice[]>
+  findMany(params: InvoicesListParams): Promise<Invoice[]>
   add(invoice: Invoice): Promise<void>
   updateStatus(invoiceStatus: InvoiceStatus, invoiceId: string): Promise<void>
 }

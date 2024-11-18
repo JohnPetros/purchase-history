@@ -1,8 +1,8 @@
-import type { Includeable } from 'sequelize'
+import { Op, Sequelize, type Includeable } from 'sequelize'
 import { v4 as uuid } from 'uuid'
 
 import type { IInvoicesRepository } from '@purchase-history/core/interfaces'
-import type { InvoiceStatus } from '@purchase-history/core/types'
+import type { InvoicesListParams, InvoiceStatus } from '@purchase-history/core/types'
 import { Invoice } from '@purchase-history/core/entities'
 
 import type { SequelizeInvoice } from '../types'
@@ -46,18 +46,28 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
     return this.createInvoice(sequelizeInvoice)
   }
 
-  async findMany(): Promise<Invoice[]> {
+  async findMany({ productId, status }: InvoicesListParams): Promise<Invoice[]> {
     const sequelizeInvoices = await this.invoiceModel.findAll({
       include: [
         {
           model: InvoiceItemModel,
           as: 'items',
           include: ProductModel as unknown as Includeable[],
+          where: productId
+            ? {
+                productId,
+              }
+            : undefined,
         },
         {
           model: CustomerModel,
         },
       ],
+      where: status
+        ? {
+            status,
+          }
+        : undefined,
     })
 
     return sequelizeInvoices.map(this.createInvoice)
