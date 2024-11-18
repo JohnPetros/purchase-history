@@ -6,7 +6,10 @@ export const InvoicesService = (apiClient: IApiClient): IInvoicesService => {
       return await apiClient.get(`/invoices/${invoiceId}`)
     },
 
-    async listInvoices() {
+    async listInvoices({ status, productId }) {
+      if (status) apiClient.setParam('status', status)
+      if (productId) apiClient.setParam('productId', productId)
+
       return await apiClient.get('/invoices')
     },
 

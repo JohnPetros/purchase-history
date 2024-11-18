@@ -28,6 +28,7 @@ export const AxiosApiClient = (): IApiClient => {
   return {
     async get<ResponseBody>(url: string) {
       try {
+        console.log(axios.defaults.params)
         const response = await axios.get(url)
         return sendResponse<ResponseBody>(response)
       } catch (error) {
@@ -85,6 +86,15 @@ export const AxiosApiClient = (): IApiClient => {
     },
 
     setParam(key: string, value: string): void {
+      if (key in axios.defaults.params) {
+        axios.defaults.params = {
+          [key]: axios.defaults.params[key].concat(`,${value}`),
+          ...axios.defaults.params,
+        }
+
+        return
+      }
+
       axios.defaults.params = {
         [key]: value,
         ...axios.defaults.params,

@@ -9,10 +9,17 @@ import Drawer from '@/ui/components/drawer/index.vue'
 import InvoiceCard from '@/ui/pages/invoices-page/invoice-card/index.vue'
 
 import { useInvoicesPage } from './use-invoices-page'
+import { Select } from 'primevue'
 
 const drawerRef = useTemplateRef('drawer')
-const { invoices, isInvoicesLoading, handleInvoiceFormSubmit } =
-  useInvoicesPage(drawerRef)
+const {
+  invoices,
+  products,
+  selectedStatus,
+  selectedProductId,
+  isInvoicesLoading,
+  handleInvoiceFormSubmit,
+} = useInvoicesPage(drawerRef)
 </script>
 
 <template>
@@ -23,6 +30,7 @@ const { invoices, isInvoicesLoading, handleInvoiceFormSubmit } =
           <h1 class="text-3xl text-slate-50 font-semibold">Invoices</h1>
           <p v-show="!isInvoicesLoading" class="text-slate-50 text-sm mt-3">There are {{ invoices.length }} total Invoices</p>
         </div>
+
         <Drawer ref="drawer" title="New Invoice">
             <template #content>
             <InvoiceForm @submit="handleInvoiceFormSubmit" />
@@ -35,6 +43,22 @@ const { invoices, isInvoicesLoading, handleInvoiceFormSubmit } =
         </Drawer>
       </header>
 
+     <div class="flex items-center gap-3 mt-3">
+      <Select 
+        v-model="selectedProductId" 
+        :options="products" 
+        optionLabel="name.value" 
+        optionValue="id" 
+        filter 
+        placeholder="Filter by product" 
+      />
+      <Select 
+       v-model="selectedStatus" 
+       :options="['paid', 'pending']" 
+       filter 
+       placeholder="Filter by status" 
+      />
+     </div>
 
       <div v-if="isInvoicesLoading" class="mt-12 mx-auto w-max">
         <ProgressSpinner aria-label="Loading" />
