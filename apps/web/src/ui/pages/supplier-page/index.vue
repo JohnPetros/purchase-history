@@ -57,7 +57,7 @@ const { supplier, isSupplierLoading, handleSupplierFormSubmit, handleDeleteButto
           {{ supplier.email.value }}
         </Info>
         <Info label="EIN" >
-          {{ supplier.cnpj.value }}
+          {{ supplier.ein.value }}
         </Info>
         <Info label="Phone" >
           {{ supplier.phone.value }}

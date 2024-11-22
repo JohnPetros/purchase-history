@@ -13,6 +13,7 @@ type Body = {
 export class RegisterProductController {
   async handle(http: IHttp) {
     const { product, supplierId } = http.getBody<Body>()
+    console.log(product)
     const useCase = new RegisterProductUseCase(productsRepository, suppliersRepository)
     const registeredProduct = await useCase.execute(product, supplierId)
 

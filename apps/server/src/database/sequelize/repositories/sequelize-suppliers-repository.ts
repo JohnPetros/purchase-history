@@ -25,6 +25,16 @@ export class SequelizeSuppliersRepository implements ISuppliersRepository {
     return this.createSupplier(sequelizeSupplier)
   }
 
+  async findByEin(supplierEin: string): Promise<Supplier | null> {
+    const sequelizeSupplier = await this.supplierModel.findOne({
+      where: { ein: supplierEin },
+    })
+
+    if (!sequelizeSupplier) return null
+
+    return this.createSupplier(sequelizeSupplier)
+  }
+
   async findByPhone(supplierPhone: string): Promise<Supplier | null> {
     const sequelizeSupplier = await this.supplierModel.findOne({
       where: { phone: supplierPhone },
@@ -36,7 +46,9 @@ export class SequelizeSuppliersRepository implements ISuppliersRepository {
   }
 
   async findMany(): Promise<Supplier[]> {
-    const sequelizeSuppliers = await this.supplierModel.findAll()
+    const sequelizeSuppliers = await this.supplierModel.findAll({
+      order: [['createdAt', 'DESC']],
+    })
 
     return sequelizeSuppliers.map(this.createSupplier)
   }

@@ -5,7 +5,7 @@ export class Text {
   private constructor(readonly value: string) {}
 
   static create(value: string, key: string, isNumeric = false) {
-    if (typeof value !== 'string') throw new NotValidError(`${key} value must be a text`)
+    if (typeof value !== 'string' || !value) throw new NotValidError(`${key} value must be a text`)
 
     if (isNumeric && !Text.NUMERIC_REGEX.test(value)) {
       throw new NotValidError(`${key} value must be a numeric value`)

@@ -31,7 +31,9 @@ export class SequelizeProductsRepository implements IProductsRepository {
   async findMany(): Promise<Product[]> {
     const sequelizeProducts = await this.productModel.findAll({
       include: SupplierModel,
-    })
+      order: [['createdAt', 'DESC']],
+    }, 
+  )
 
     return sequelizeProducts.map(this.createProduct)
   }

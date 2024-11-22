@@ -68,6 +68,7 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
             status,
           }
         : undefined,
+      order: [['createdAt', 'DESC']],
     })
 
     return sequelizeInvoices.map(this.createInvoice)

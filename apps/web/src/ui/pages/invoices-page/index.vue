@@ -20,6 +20,7 @@ const {
   isInvoicesLoading,
   handleInvoiceFormSubmit,
 } = useInvoicesPage(drawerRef)
+
 </script>
 
 <template>
@@ -54,8 +55,7 @@ const {
       />
       <Select 
        v-model="selectedStatus" 
-       :options="['paid', 'pending']" 
-       filter 
+       :options="['all', 'paid', 'pending']" 
        placeholder="Filter by status" 
       />
      </div>
@@ -65,8 +65,12 @@ const {
       </div>
 
       <ul v-if="!isInvoicesLoading" class="mt-12 space-y-6">
-        <li v-for="invoice in invoices">
+        <li 
+          v-for="invoice in invoices"
+          :key="invoice.id"
+        >
           <InvoiceCard
+          
             :id="invoice.id" 
             :number="invoice.number.value" 
             :amount="invoice.amount.format()" 

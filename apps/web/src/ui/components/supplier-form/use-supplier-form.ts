@@ -10,6 +10,15 @@ export function useSupplierForm(
 ) {
   const isSubmitting = ref(false)
 
+  const initialValues = supplier
+  ? {
+      name: supplier.name.value,
+      email: supplier.email.value,
+      ein: supplier.ein.value,
+      phone: supplier.phone.value,
+    }
+  : undefined
+
   function handleSubmit({ states }: FormSubmitEvent) {
     isSubmitting.value = true
 
@@ -40,6 +49,7 @@ export function useSupplierForm(
   })
 
   return {
+    initialValues,
     isSubmitting,
     handleSubmit,
   }
