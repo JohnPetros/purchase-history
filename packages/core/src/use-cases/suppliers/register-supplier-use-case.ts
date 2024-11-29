@@ -25,5 +25,6 @@ export class RegisterSupplierUseCase {
     if (existingSupplierWithSamePhone) throw new NotValidError('Telefone already in use')
 
     await this.suppliersRepository.add(supplier)
+    return supplier.dto
   }
 }
