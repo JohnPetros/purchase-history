@@ -83,7 +83,7 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
       zipcode: invoice.customer.address.zipcode.value,
     })
 
-    await this.invoiceModel.create({
+   const createdInvoice = await this.invoiceModel.create({
       id: invoice.id,
       status: invoice.status,
       customerId: createdCustomer.id,
@@ -97,6 +97,8 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
         itemsCount: item.itemsCount.value,
       })
     }
+
+    return createdInvoice.number
   }
 
   private createInvoice(sequelizeInvoice: SequelizeInvoice): Invoice {

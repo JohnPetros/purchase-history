@@ -8,8 +8,8 @@ export class RegisterSupplierController {
   async handle(http: IHttp) {
     const supplierDto = http.getBody<SupplierDto>()
     const useCase = new RegisterSupplierUseCase(suppliersRepository)
-    await useCase.execute(supplierDto)
+    const registeredSupplier = await useCase.execute(supplierDto)
 
-    return http.send(supplierDto)
+    return http.send(registeredSupplier)
   }
 }

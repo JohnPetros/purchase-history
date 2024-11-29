@@ -85,8 +85,12 @@ export class Invoice extends Entity<InvoiceProps> {
     return this.props.items
   }
 
-  get number() {
+  get number(): Integer {
     return this.props.number
+  }
+
+  set number(number: number) {
+     this.props.number = Integer.create(number, 'invoice number')
   }
 
   get sentAt() {

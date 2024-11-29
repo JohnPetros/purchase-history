@@ -35,7 +35,8 @@ export class SendInvoiceUseCase {
       })
     }
 
-    await this.invoicesRepository.add(invoice)
+    const invoiceNumber = await this.invoicesRepository.add(invoice)
+    invoice.number = invoiceNumber
     return invoice.dto
   }
 }
