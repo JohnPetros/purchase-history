@@ -12,9 +12,9 @@ type Body = {
 
 export class SendInvoiceController {
   async handle(http: IHttp) {
-    const { invoice, items } = http.getBody<Body>()
+    const body = http.getBody<Body>()
     const useCase = new SendInvoiceUseCase(invoicesRepository, productsRepository)
-    const sentInvoice = await useCase.execute(invoice, items)
+    const sentInvoice = await useCase.execute(body.invoice, body.items)
 
     return http.send(sentInvoice, HTTP_STATUS_CODE.created)
   }
