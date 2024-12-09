@@ -21,7 +21,7 @@ const { invoice, isInvoiceLoading, handleInvoiceStatusButtonClick } = useInvoice
 
     <Skeleton v-if="isInvoiceLoading" width="full" height="5.5rem" class="!bg-slate-800 !mt-6"></Skeleton>
 
-    <Container v-if="invoice" class-name="flex items-center justify-between mt-6 h-20 space-x-3">
+    <Container v-if="invoice" class-name="flex flex-col md:flex-row md:items-center md:justify-between gap-3 md:gap-0 mt-6 md:h-20 space-x-3">
       <div class="flex items-center gap-3" >
         <span class="text-slate-50">status</span>
         <InvoiceStatus :status="invoice.status" />
@@ -41,6 +41,12 @@ const { invoice, isInvoiceLoading, handleInvoiceStatusButtonClick } = useInvoice
       </Code>
 
       <dl class="mt-6 flex justify-between w-full">
+        <Info label="Invoice date" >
+          <span>{{ invoice.sentAt.format() }}</span>
+        </Info>
+      </dl>
+
+      <dl class="mt-6 flex justify-between w-full">
         <Info label="Customer' info" >
           <span>{{ invoice.customer.name.value }}</span>
           <span>{{ invoice.customer.email.value }}</span>
@@ -49,9 +55,6 @@ const { invoice, isInvoiceLoading, handleInvoiceStatusButtonClick } = useInvoice
           <span>{{ invoice.customer.address.city.value }}</span>
           <span>{{ invoice.customer.address.state.value }}</span>
           <span>{{ invoice.customer.address.zipcode.value }}</span>
-        </Info>
-        <Info label="Invoice date" >
-          <span>{{ invoice.sentAt.format() }}</span>
         </Info>
       </dl>
 

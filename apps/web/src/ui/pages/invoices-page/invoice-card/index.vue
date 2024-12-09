@@ -18,6 +18,23 @@ defineProps<Props>()
 </script>
 
 <template>
+ <div class="md:hidden">
+    <Card :link="`/invoices/${id}`" class="" >
+    <div class="space-y-3">
+      <Code>
+        {{  number }}
+      </Code>
+      <h2 class="text-slate-50 truncate w-24">{{ customerName }}</h2>
+      <time class="text-slate-50">{{ sentAt }}</time>
+    </div>
+    <div class="space-y-3">
+      <strong class="text-slate-50 text-lg font-bold">{{ amount }}</strong>
+      <InvoiceStatus :status="status" />
+    </div>
+    </Card>
+ </div>
+
+ <div class="hidden md:block">
   <Card :link="`/invoices/${id}`">
     <Code>
       {{  number }}
@@ -27,4 +44,5 @@ defineProps<Props>()
     <strong class="text-slate-50 text-lg font-bold">{{ amount }}</strong>
     <InvoiceStatus :status="status" />
   </Card>
+ </div>
 </template>
