@@ -12,6 +12,7 @@ import {
   InvoiceItemModel,
   type InvoiceModel,
 } from '../models'
+import { PAGINATION } from '@purchase-history/core/constants'
 
 export class SequelizeInvoicesRepository implements IInvoicesRepository {
   constructor(
@@ -46,8 +47,12 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
     return this.createInvoice(sequelizeInvoice)
   }
 
-  async findMany({ productId, status }: InvoicesListParams): Promise<Invoice[]> {
-    const sequelizeInvoices = await this.invoiceModel.findAll({
+  async findMany({
+    productId,
+    status,
+    page,
+  }: InvoicesListParams): Promise<{ invoices: Invoice[]; count: number }> {
+    const { rows, count } = await this.invoiceModel.findAndCountAll({
       include: [
         {
           model: InvoiceItemModel,
@@ -68,10 +73,15 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
             status,
           }
         : undefined,
+      limit: PAGINATION.itemsPerPage,
+      offset: (page - 1) * PAGINATION.itemsPerPage,
       order: [['createdAt', 'DESC']],
     })
 
-    return sequelizeInvoices.map(this.createInvoice)
+    return {
+      invoices: rows.map(this.createInvoice),
+      count,
+    }
   }
 
   async add(invoice: Invoice) {
@@ -83,7 +93,7 @@ export class SequelizeInvoicesRepository implements IInvoicesRepository {
       zipcode: invoice.customer.address.zipcode.value,
     })
 
-   const createdInvoice = await this.invoiceModel.create({
+    const createdInvoice = await this.invoiceModel.create({
       id: invoice.id,
       status: invoice.status,
       customerId: createdCustomer.id,

@@ -1,5 +1,5 @@
 import type { InvoiceDto } from '@purchase-history/core/dtos'
-import type { ApiResponse } from '@purchase-history/core/responses'
+import type { ApiResponse, PaginationResponse } from '@purchase-history/core/responses'
 import type { InvoicesListParams } from '../../types'
 
 type InvoiceItem = {
@@ -9,7 +9,9 @@ type InvoiceItem = {
 
 export interface IInvoicesService {
   getInvoice(invoiceId: string): Promise<ApiResponse<InvoiceDto>>
-  listInvoices(params: InvoicesListParams): Promise<ApiResponse<InvoiceDto[]>>
+  listInvoices(
+    params: InvoicesListParams,
+  ): Promise<ApiResponse<PaginationResponse<InvoiceDto>>>
   sendInvoice(
     invoiceDto: InvoiceDto,
     invoiceItems: InvoiceItem[],

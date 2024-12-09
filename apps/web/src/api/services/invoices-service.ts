@@ -6,9 +6,11 @@ export const InvoicesService = (apiClient: IApiClient): IInvoicesService => {
       return await apiClient.get(`/invoices/${invoiceId}`)
     },
 
-    async listInvoices({ status, productId }) {
-      if (status && ['paid', 'pending'].includes(status)) apiClient.setParam('status', status)
+    async listInvoices({ status, productId, page }) {
+      if (status && ['paid', 'pending'].includes(status))
+        apiClient.setParam('status', status)
       if (productId) apiClient.setParam('productId', productId)
+      apiClient.setParam('page', String(page))
 
       return await apiClient.get('/invoices')
     },

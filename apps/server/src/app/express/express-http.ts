@@ -24,4 +24,8 @@ export class ExpressHttp implements IHttp {
   getQueryParams<QueryParams>(): QueryParams {
     return this.request.query as QueryParams
   }
+
+  setHeader(key: string, value: string): void {
+    this.response.setHeader(key, value)
+  }
 }

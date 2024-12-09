@@ -1,6 +1,6 @@
 import Axios, { type AxiosInstance, type AxiosResponse } from 'axios'
 
-import { ApiResponse } from '@purchase-history/core/responses'
+import { ApiResponse, PaginationResponse } from '@purchase-history/core/responses'
 import type { IApiClient } from '@purchase-history/core/interfaces'
 
 import { handleAxiosError } from './utils'
@@ -15,6 +15,22 @@ export const AxiosApiClient = (): IApiClient => {
 
   function sendResponse<ResponseBody>(response: AxiosResponse) {
     clearParams()
+
+    const includesPagination =
+      'X-Pagination' in response.headers &&
+      'items' in response.data &&
+      'itemsCount' in response.data
+
+    if (includesPagination) {
+      return new ApiResponse({
+        body: new PaginationResponse({
+          items: response.data.items,
+          itemsCount: response.data.itemsCount,
+        }),
+        statusCode: response.status,
+      }) as ApiResponse<ResponseBody>
+    }
+
     return new ApiResponse<ResponseBody>({
       body: response.data,
       statusCode: response.status,
@@ -28,7 +44,6 @@ export const AxiosApiClient = (): IApiClient => {
   return {
     async get<ResponseBody>(url: string) {
       try {
-        console.log(axios.defaults.params)
         const response = await axios.get(url)
         return sendResponse<ResponseBody>(response)
       } catch (error) {
@@ -86,7 +101,7 @@ export const AxiosApiClient = (): IApiClient => {
     },
 
     setParam(key: string, value: string): void {
-      if (key in axios.defaults.params) {
+      if (axios.defaults.params && key in axios.defaults.params) {
         axios.defaults.params = {
           [key]: axios.defaults.params[key].concat(`,${value}`),
           ...axios.defaults.params,
