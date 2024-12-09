@@ -7,6 +7,7 @@ import PlusButton from '@/ui/components/plus-button/index.vue'
 import ProductForm from '@/ui/components/product-form/index.vue'
 import Drawer from '@/ui/components/drawer/index.vue'
 import ProductCard from '@/ui/pages/products-page/product-card/index.vue'
+import Pagination from '@/ui/components/pagination/index.vue'
 
 import { useProductsPage } from './use-products-page'
 
@@ -50,5 +51,7 @@ const { products, isProductsLoading, handleProductFormSubmit } =
         </li>
       </ul>
     </div>
+
+    <Pagination :total-records-count="100" />
   </Page>
 </template>

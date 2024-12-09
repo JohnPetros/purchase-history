@@ -6,6 +6,7 @@ import Page from '@/ui/layouts/page-layout/index.vue'
 import PlusButton from '@/ui/components/plus-button/index.vue'
 import InvoiceForm from '@/ui/components/invoice-form/index.vue'
 import Drawer from '@/ui/components/drawer/index.vue'
+import Pagination from '@/ui/components/pagination/index.vue'
 import InvoiceCard from '@/ui/pages/invoices-page/invoice-card/index.vue'
 
 import { useInvoicesPage } from './use-invoices-page'
@@ -15,12 +16,14 @@ const drawerRef = useTemplateRef('drawer')
 const {
   invoices,
   products,
+  pagesCount,
+  totalInvoicesCount,
   selectedStatus,
   selectedProductId,
   isInvoicesLoading,
   handleInvoiceFormSubmit,
+  handlePaginationChange,
 } = useInvoicesPage(drawerRef)
-
 </script>
 
 <template>
@@ -70,7 +73,6 @@ const {
           :key="invoice.id"
         >
           <InvoiceCard
-          
             :id="invoice.id" 
             :number="invoice.number.value" 
             :amount="invoice.amount.format()" 
@@ -80,6 +82,10 @@ const {
           />
         </li>
       </ul>
+    </div>
+
+    <div v-if="pagesCount > 1" class="mt-6">
+      <Pagination :total-records-count="totalInvoicesCount" :change="handlePaginationChange" />
     </div>
   </Page>
 </template>
